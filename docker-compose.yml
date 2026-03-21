@@ -16,7 +16,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-      - DATABASE_URL=postgresql://root:root@db:5432/pr
+      - DATABASE_URL=postgresql://root:profpass@db:5432/profdnk
 
   frontend:
     build: ./frontend
