@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПрофДНК - Платформа профессиональной ориентации</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background Elements -->
+    <div class="gradient-blob blob-1"></div>
+    <div class="gradient-blob blob-2"></div>
+    <div class="small-blob small-blob-1"></div>
+    <div class="small-blob small-blob-2"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="menu-left">
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <div class="nav-title">Проф<span class="highlight">ДНК</span></div>
+        
+        <div class="menu-right">
+            <div class="top-menu" id="topMenu">
+                <a href="#" onclick="navigateTo('home')" class="top-menu-link">О платформе</a>
+                <a href="#" onclick="navigateTo('builder')" class="top-menu-link" id="menuBuilder" style="display:none;">Конструктор</a>
+                <a href="#" onclick="navigateTo('take-by-link')" class="top-menu-link">Пройти тест</a>
+                <a href="#" onclick="navigateTo('contacts')" class="top-menu-link">Контакты</a>
+                <a href="#" onclick="navigateTo('admin-login')" class="top-menu-link" style="color: #ffc107;">
+                    <i class="fas fa-user-shield"></i> Админ
+                </a>
+            </div>
+            
+            <div class="user-name" id="navUserName"></div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Меню</h2>
+            <button class="close-btn" onclick="toggleMenu()">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li onclick="navigateTo('home')"><i class="fas fa-home"></i> Главная</li>
+            <li onclick="navigateTo('login')" id="linkLogin"><i class="fas fa-sign-in-alt"></i> Вход</li>
+            <li onclick="navigateTo('admin-cabinet')" id="linkAdmin" style="display:none;"><i class="fas fa-user-shield"></i> Кабинет админа</li>
+            <li onclick="navigateTo('dashboard')" id="linkDashboard" style="display:none;"><i class="fas fa-chart-line"></i> Мои тесты</li>
+            <li onclick="navigateTo('psych-clients')" id="linkClients" style="display:none;"><i class="fas fa-users"></i> Клиенты</li>
+            <li onclick="navigateTo('builder')" id="linkBuilder" style="display:none;"><i class="fas fa-cogs"></i> Конструктор</li>
+            <li onclick="navigateTo('profile')" id="linkProfile" style="display:none;"><i class="fas fa-user-md"></i> Профиль</li>
+            <li onclick="logout()" id="linkLogout" style="display:none;"><i class="fas fa-sign-out-alt"></i> Выход</li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="app">
+        
+        <!-- VIEW: HOME / LANDING -->
+        <section id="view-home" class="view active">
+            <div class="hero-content">
+                <div class="hero-check-circle">
+                    <div class="wavy-circle">
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                </div>
+                
+                <h1>Платформа профессиональной ориентации</h1>
+                <p>Создавайте диагностические методики, проводите тестирование и получайте отчеты в реальном времени.</p>
+                <button class="btn-primary" onclick="handleStartWork()">
+                    <i class="fas fa-rocket"></i> Начать работу
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW: ABOUT -->
+        <section id="view-about" class="view">
+            <div class="card">
+                <h2>О платформе</h2>
+                <div class="about-content">
+                    <p>ПрофДНК - это современная онлайн-платформа для профессиональной ориентации и психодиагностики.</p>
+                    <br>
+                    <h3>Возможности платформы:</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                        <li>Конструктор диагностических методик</li>
+                        <li>Прохождение тестов по уникальной ссылке без регистрации</li>
+                        <li>Хранение результатов и метрик по каждому клиенту</li>
+                        <li>Два вида отчетов: для клиента и для профориентолога</li>
+                        <li>Экспорт отчетов в DOCX и HTML форматах</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: CONTACTS -->
+        <section id="view-contacts" class="view">
+            <div class="contacts-container">
+                <div class="card contacts-card">
+                    <h2><i class="fas fa-headset"></i> Поддержка</h2>
+                    <p style="color: var(--text-sec); margin-bottom: 20px;">Мы всегда на связи</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Телефон</h4>
+                                <p>+7 (999) 123-45-67</p>
+                                <small>Пн-Пт с 9:00 до 18:00</small>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>support@profdnk.ru</p>
+                                <small>Отвечаем в течение 24 часов</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: ADMIN LOGIN -->
+        <section id="view-admin-login" class="view">
+            <div class="card auth-card">
+                <h2><i class="fas fa-user-shield"></i> Вход для администратора</h2>
+                <form id="adminAuthForm" onsubmit="handleAdminAuth(event)">
+                    <input type="text" id="adminLogin" placeholder="Логин администратора" required>
+                    <input type="password" id="adminPass" placeholder="Пароль" required>
+                    <button type="submit" class="btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Войти
+                    </button>
+                </form>
+                <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-sec); text-align: center;">
+                    По умолчанию: admin / admin123
+                </p>
+            </div>
+        </section>
+
+        <!-- VIEW: ADMIN CABINET -->
+        <section id="view-admin-cabinet" class="view">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <div>
+                        <h2><i class="fas fa-user-shield"></i> Кабинет администратора</h2>
+                        <p style="color: var(--text-sec); font-size: 0.9rem; margin-top: 5px;">Управление платформой и тестами</p>
+                    </div>
+                    <button class="btn-secondary" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Выйти
+                    </button>
+                </div>
+                
+                <!-- Вкладки администратора -->
+                <div class="admin-tabs" style="display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; flex-wrap: wrap;">
+                    <button class="tab-btn active" onclick="showAdminSection('admin-stats')">
+                        <i class="fas fa-chart-line"></i> Статистика
+                    </button>
+                    <button class="tab-btn" onclick="showAdminSection('admin-psychologists')">
+                        <i class="fas fa-users"></i> Психологи
+                    </button>
+                    <button class="tab-btn" onclick="showAdminSection('admin-tests')">
+                        <i class="fas fa-clipboard-list"></i> Тесты
+                    </button>
+                    <button class="tab-btn" onclick="showAdminSection('admin-settings')">
+                        <i class="fas fa-cogs"></i> Настройки
+                    </button>
+                </div>
+                
+                <!-- Секция: Статистика -->
+                <div id="admin-stats" class="admin-section">
+                    <div class="admin-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                        <div class="stat-box">
+                            <h3>Психологов</h3>
+                            <span id="adminPsychologistsCount">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Активных</h3>
+                            <span id="adminActiveCount">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Заблокировано</h3>
+                            <span id="adminBlockedCount">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Всего тестов</h3>
+                            <span id="adminTestsCount">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Клиентов</h3>
+                            <span id="adminClientsCount">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Прохождений</h3>
+                            <span id="adminSubmissionsCount">0</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(0,229,255,0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(0,229,255,0.3);">
+                        <h3 style="color: var(--accent); margin-bottom: 15px;"><i class="fas fa-info-circle"></i> Рабочий контур платформы</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                            <div>
+                                <p style="color: var(--text-sec); font-size: 0.85rem;">Статус платформы</p>
+                                <p style="color: #4caf50; font-weight: bold;"><i class="fas fa-check-circle"></i> Работает</p>
+                            </div>
+                            <div>
+                                <p style="color: var(--text-sec); font-size: 0.85rem;">Версия системы</p>
+                                <p style="color: var(--text-main);">v1.0.0</p>
+                            </div>
+                            <div>
+                                <p style="color: var(--text-sec); font-size: 0.85rem;">Последнее обновление</p>
+                                <p style="color: var(--text-main);" id="lastUpdate">—</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Секция: Психологи -->
+                <div id="admin-psychologists" class="admin-section" style="display: none;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                        <button class="btn-primary" onclick="showCreatePsychologistForm()">
+                            <i class="fas fa-user-plus"></i> Создать психолога
+                        </button>
+                        <button class="btn-secondary" onclick="renderPsychologistsList()">
+                            <i class="fas fa-sync"></i> Обновить
+                        </button>
+                    </div>
+                    
+                    <div id="createPsychologistForm" style="display: none; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+                        <h3 style="margin-bottom: 15px;">Создание нового психолога</h3>
+                        <form onsubmit="createPsychologist(event)">
+                            <input type="text" id="newPsychName" placeholder="ФИО психолога" required>
+                            <input type="email" id="newPsychEmail" placeholder="Email" required>
+                            <input type="password" id="newPsychPass" placeholder="Пароль" required>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <label style="font-size: 0.85rem; color: var(--text-sec);">Срок доступа (дней)</label>
+                                    <input type="number" id="newPsychAccessDays" placeholder="30" value="30" min="1" required>
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.85rem; color: var(--text-sec);">Макс. тестов</label>
+                                    <input type="number" id="newPsychMaxTests" placeholder="10" value="10" min="1" required>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-check"></i> Создать
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="hideCreatePsychologistForm()">
+                                    <i class="fas fa-times"></i> Отмена
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px;">Список психологов</h3>
+                    <div id="psychologistsList" style="display: grid; gap: 10px;"></div>
+                </div>
+                
+                <!-- Секция: Тесты -->
+                <div id="admin-tests" class="admin-section" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3><i class="fas fa-clipboard-list"></i> Все тесты платформы</h3>
+                        <button class="btn-primary" onclick="navigateTo('builder')" style="padding: 8px 18px; font-size: 0.9rem;">
+                            <i class="fas fa-plus"></i> Создать тест
+                        </button>
+                    </div>
+                    <div class="tests-grid" id="adminTestsList">
+                        <div class="empty-state">Список тестов пуст</div>
+                    </div>
+                </div>
+                
+                <!-- Секция: Настройки -->
+                <div id="admin-settings" class="admin-section" style="display: none;">
+                    <h3 style="margin-bottom: 20px;"><i class="fas fa-cogs"></i> Системные настройки</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 15px; color: var(--accent);">Управление доступом</h4>
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                            <button class="btn-secondary" onclick="checkExpiredAccess()" style="margin-right: 10px;">
+                                <i class="fas fa-clock"></i> Проверить истёкшие доступы
+                            </button>
+                            <button class="btn-secondary" onclick="clearSystemCache()">
+                                <i class="fas fa-trash"></i> Очистить кэш
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 15px; color: var(--accent);">Данные платформы</h4>
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                            <button class="btn-secondary" onclick="exportAllData()" style="margin-right: 10px;">
+                                <i class="fas fa-download"></i> Экспорт данных
+                            </button>
+                            <button class="btn-secondary" onclick="importData()">
+                                <i class="fas fa-upload"></i> Импорт данных
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: PUBLIC TEST INTRO -->
+        <section id="view-public-intro" class="view">
+            <div class="card auth-card" style="max-width: 500px;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <i class="fas fa-clipboard-list" style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;"></i>
+                    <h2 id="publicTestTitle">Название теста</h2>
+                    <p style="color: var(--text-sec);">Пожалуйста, представьтесь перед началом</p>
+                </div>
+                
+                <form id="publicClientForm" onsubmit="submitClientInfo(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label style="font-size: 0.85rem; color: var(--text-sec);">Имя *</label>
+                            <input type="text" id="clientFirstName" placeholder="Иван" required>
+                        </div>
+                        <div>
+                            <label style="font-size: 0.85rem; color: var(--text-sec);">Фамилия *</label>
+                            <input type="text" id="clientLastName" placeholder="Иванов" required>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label style="font-size: 0.85rem; color: var(--text-sec);">Номер телефона (необязательно)</label>
+                        <input type="tel" id="clientPhone" placeholder="+7 (999) 000-00-00">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-play"></i> Начать тестирование
+                    </button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-sec);">
+                    <i class="fas fa-lock"></i> Ваши данные конфиденциальны
+                </p>
+            </div>
+        </section>
+
+        <!-- VIEW: LOGIN -->
+        <section id="view-login" class="view">
+            <div class="card auth-card">
+                <h2 id="authTitle">Вход</h2>
+                <form id="authForm" onsubmit="handleAuth(event)">
+                    <input type="email" id="authEmail" placeholder="Email (логин)" required autocomplete="email">
+                    <input type="password" id="authPass" placeholder="Пароль" required autocomplete="current-password">
+                    <button type="submit" class="btn-primary" id="authBtn">Войти</button>
+                </form>
+                <p class="switch-auth" onclick="showLoginHelp()">
+                    <i class="fas fa-question-circle"></i> Нет аккаунта?
+                </p>
+                <div id="loginHelp" style="display: none; margin-top: 15px; padding: 15px; background: rgba(0,229,255,0.1); border-radius: 10px; font-size: 0.85rem; color: var(--text-sec);">
+                    <p><i class="fas fa-info-circle"></i> Для входа обратитесь к администратору платформы.</p>
+                    <button class="btn-secondary" onclick="navigateTo('admin-login')" style="margin-top: 10px; font-size: 0.8rem;">
+                        <i class="fas fa-user-shield"></i> Вход для администратора
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: DASHBOARD -->
+        <section id="view-dashboard" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>Мои тесты:</h2>
+                <button class="btn-primary" onclick="navigateTo('builder')" style="padding: 8px 18px; font-size: 0.9rem;">
+                    <i class="fas fa-plus"></i> Создать тест
+                </button>
+            </div>
+            <div class="tests-grid" id="testsList">
+                <div class="empty-state">Список тестов пуст. Перейдите в конструктор.</div>
+            </div>
+        </section>
+
+        <!-- VIEW: PSYCHOLOGIST CLIENTS -->
+        <section id="view-psych-clients" class="view">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2><i class="fas fa-users"></i> Мои клиенты</h2>
+                    <button class="btn-secondary" onclick="navigateTo('dashboard')">
+                        <i class="fas fa-arrow-left"></i> Назад к тестам
+                    </button>
+                </div>
+                
+                <div id="clientsList" style="display: grid; gap: 15px;"></div>
+            </div>
+        </section>
+
+        <!-- VIEW: CLIENT DETAIL -->
+        <section id="view-client-detail" class="view">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2><i class="fas fa-file-medical"></i> Результат клиента</h2>
+                    <button class="btn-secondary" onclick="navigateTo('psych-clients')">
+                        <i class="fas fa-arrow-left"></i> Назад
+                    </button>
+                </div>
+                
+                <div id="clientDetailContent"></div>
+                
+                <div class="report-actions" style="margin-top: 25px;">
+                    <button class="btn-action" onclick="printReport()">
+                        <i class="fas fa-print"></i> Печать
+                    </button>
+                    <button class="btn-action" onclick="downloadDOCX()">
+                        <i class="fas fa-file-word"></i> Скачать DOCX
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: BUILDER -->
+        <section id="view-builder" class="view">
+            <div class="card builder-card">
+                <h2>Конструктор методик</h2>
+                <div class="form-group">
+                    <label>Название теста</label>
+                    <input type="text" id="testTitle" placeholder="Например: Профессиональная ориентация">
+                </div>
+                
+                <div class="builder-info">
+                    <p><i class="fas fa-info-circle"></i> Выберите формат ответов для всех вопросов теста</p>
+                </div>
+                
+                <div class="answer-format-selector">
+                    <label class="format-option">
+                        <input type="radio" name="answerFormat" value="slider" checked>
+                        <div class="format-card">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Шкала от 1 до 10 баллов</span>
+                            <small>Подходит для оценки интенсивности</small>
+                        </div>
+                    </label>
+                    
+                    <label class="format-option">
+                        <input type="radio" name="answerFormat" value="choice">
+                        <div class="format-card">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Да / Нет / Сложно ответить</span>
+                            <small>Подходит для бинарных вопросов</small>
+                        </div>
+                    </label>
+                </div>
+                
+                <div id="questionsContainer"></div>
+
+                <div class="builder-controls">
+                    <button class="btn-secondary" onclick="addQuestionField()">+ Добавить вопрос</button>
+                    <button class="btn-primary" onclick="saveTest()">Сохранить тест</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: TAKE TEST BY LINK -->
+        <section id="view-take-by-link" class="view">
+            <div class="card">
+                <h2><i class="fas fa-link"></i> Пройти тест по ссылке</h2>
+                <p style="color: var(--text-sec); margin: 20px 0;">
+                    Вставьте ссылку на тест для начала прохождения.<br>
+                    <small>Формат: https://profdnk.ru/?test=AbCdEfGh</small>
+                </p>
+                
+                <div class="link-input-container" style="display: flex; gap: 15px; margin: 25px 0; flex-wrap: wrap;">
+                    <input type="text" id="testLinkInput" placeholder="https://profdnk.ru/?test=AbCdEfGh" style="flex: 1; min-width: 250px;">
+                    <button class="btn-primary" onclick="loadTestByLink()" style="min-width: 150px;">
+                        <i class="fas fa-play"></i> Загрузить тест
+                    </button>
+                </div>
+                
+                <div style="margin-top: 25px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;"><i class="fas fa-info-circle"></i> Как это работает:</h4>
+                    <ol style="color: var(--text-sec); line-height: 2; margin-left: 20px;">
+                        <li>Получите ссылку на тест от профориентолога</li>
+                        <li>Вставьте ссылку в поле выше</li>
+                        <li>Нажмите "Загрузить тест"</li>
+                        <li>Заполните ваши данные (имя, фамилия)</li>
+                        <li>Пройдите тестирование онлайн</li>
+                        <li>Получите результаты сразу после завершения</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: TEST INTERFACE -->
+        <section id="view-test-interface" class="view">
+            <div class="card test-card">
+                <div class="test-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 id="currentTestTitle">Название теста</h3>
+                        <span id="clientNameDisplay" style="color: var(--accent); font-size: 0.9rem;"></span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p style="color: var(--text-sec); font-size: 0.9rem;">
+                        Вопрос <span id="currentQuestionNum">1</span> из <span id="totalQuestionsNum">0</span>
+                    </p>
+                </div>
+                <div id="questionsRenderArea"></div>
+            </div>
+        </section>
+
+        <!-- VIEW: RESULTS & REPORTS -->
+        <section id="view-results" class="view">
+            <div class="card results-card">
+                <h2>Результат:</h2>
+                <div class="result-score" id="resultScore">0</div>
+                <p id="resultText"></p>
+                
+                <div class="report-tabs">
+                    <button class="tab-btn active" onclick="switchReportTab('client')">Для клиента</button>
+                    <button class="tab-btn" onclick="switchReportTab('psychologist')">Для психолога</button>
+                </div>
+                
+                <div id="reportContent" class="report-content"></div>
+
+                <div class="report-actions">
+                    <button class="btn-action" onclick="printReport()">
+                        <i class="fas fa-print"></i> Печать
+                    </button>
+                    <button class="btn-action" onclick="downloadDOCX()">
+                        <i class="fas fa-file-word"></i> Скачать DOCX
+                    </button>
+                    <button class="btn-action" onclick="navigateTo('dashboard')">
+                        <i class="fas fa-list"></i> К списку тестов
+                    </button>
+                </div>
+                
+                <button class="btn-retake" onclick="retakeTest()">
+                    <i class="fas fa-redo"></i> Пройти ещё раз
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW: PSYCHOLOGIST PROFILE -->
+        <section id="view-profile" class="view">
+            <div class="card">
+                <div class="profile-header">
+                    <div class="profile-avatar-large"></div>
+                    <h2 id="profileName">Имя Фамилия</h2>
+                    <p class="profile-role">Профориентолог</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-box">
+                        <h3>Всего тестов</h3>
+                        <span id="statTotalTests">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Прохождений</h3>
+                        <span id="statTotalPasses">0</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-secondary" onclick="navigateTo('dashboard')">
+                        <i class="fas fa-list"></i> Мои тесты
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: SUBMISSIONS -->
+        <section id="view-submissions" class="view">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 id="submissionsTestTitle">Результаты теста</h2>
+                    <button class="btn-secondary" onclick="navigateTo('dashboard')" style="padding: 8px 15px;">
+                        <i class="fas fa-arrow-left"></i> Назад
+                    </button>
+                </div>
+                
+                <div id="submissionsList"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Comfort Popup -->
+    <div class="comfort-popup" id="comfortPopup">
+        <div class="popup-content">
+            <i class="fas fa-heart popup-heart"></i>
+            <span class="popup-text">Комфортного прохождения или создания теста!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

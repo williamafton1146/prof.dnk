@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: profdnk
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://app:secret@db:5432/profdnk
+      - SECRET_KEY=your-super-secret-key-change-it-in-production
+      - FRONTEND_HOST=http://localhost:3000 # Placeholder
+    depends_on:
+      - db
+    volumes:
+      - ./static:/app/static # Mount static volume for file uploads
+
+volumes:
+  postgres_data:
